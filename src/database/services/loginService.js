@@ -20,7 +20,7 @@ const loginService = {
         });
 
         const { error, value } = schema.validate(data);
-        console.log(error);
+        console.log(error, 'error');
 
         if (error) throw error;
 
@@ -31,7 +31,6 @@ const loginService = {
         const user = await db.User.findOne({
             where: { email },
         });
-        console.log(user, 'user');
 
         if (!user || user.password !== password) {
             const error = new Error('Invalid fields');
