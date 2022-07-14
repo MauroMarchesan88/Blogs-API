@@ -7,16 +7,16 @@ const jwtService = {
         return token;
     },
 
-    // validateToken: (token) => {
-    //     try {
-    //         const data = jwt.verify(token, process.env.JWT_SECRET);
-    //         return data;
-    //     } catch (err) {
-    //         const error = new Error('Faça login');
-    //         error.name = 'UnauthorizedError';
-    //         throw error;
-    //     }
-    // },
+    validateToken: (token) => {
+        try {
+            const data = jwt.verify(token, process.env.JWT_SECRET);
+            return data;
+        } catch (err) {
+            const error = new Error('Faça login');
+            error.name = 'UnauthorizedError';
+            throw error;
+        }
+    },
 };
 
 module.exports = jwtService; 

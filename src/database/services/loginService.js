@@ -20,36 +20,33 @@ const loginService = {
         });
 
         const { error, value } = schema.validate(data);
-        console.log(error, 'error');
 
         if (error) throw error;
 
         return value;
     },
 
-    login: async (email, password) => {
+    login: async (email, passwrd) => {
         const user = await db.User.findOne({
             where: { email },
         });
 
-        if (!user || user.password !== password) {
+        if (!user || user.password !== passwrd) {
             const error = new Error('Invalid fields');
             error.name = 'UnauthorizedError';
             throw error;
         }
 
-        const { passwordHash, ...userWithoutPassword } = user.dataValues;
+        const { password, ...userWithoutPassword } = user.dataValues;
 
         const token = jwtService.createToken(userWithoutPassword);
-
         return token;
     },
 
-    // validateToken: (token) => {
-    //     const data = jwtService.validateToken(token);
-
-    //     return data;
-    // },
+    validateToken: (token) => {
+        const data = jwtService.validateToken(token);
+        return data;
+    },
 };
 
 module.exports = loginService; 

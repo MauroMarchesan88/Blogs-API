@@ -1,5 +1,5 @@
 const loginService = require('../services/loginService.js');
-// const jwtService = require('../services/jwtService.js');
+const jwtService = require('../services/jwtService.js');
 
 const loginController = {
     login: async (req, res) => {
@@ -10,13 +10,13 @@ const loginController = {
         res.status(200).json({ token });
     },
 
-    // validateToken: (req, _res, next) => {
-    //     const { login } = req.headers;
+    validateToken: (req, _res, next) => {
+        const { login } = req.headers;
 
-    //     jwtService.validateToken(login);
+        jwtService.validateToken(login);
 
-    //     next();
-    // },
+        next();
+    },
 };
 
 module.exports = loginController; 
