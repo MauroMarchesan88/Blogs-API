@@ -28,6 +28,10 @@ const usersService = {
 
     list: async () => {
         const users = await db.User.findAll();
+        for (let index = 0; index < users.length; index += 1) {
+            delete users[index].dataValues.password;
+        }
+
         return users;
     },
 

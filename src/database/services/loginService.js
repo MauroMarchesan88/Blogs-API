@@ -45,6 +45,8 @@ const loginService = {
 
     validateToken: (token) => {
         const data = jwtService.validateToken(token);
+        // console.log(data, data);
+        // console.log(token, token);
         return data;
     },
 };

@@ -8,7 +8,7 @@ const router = Router();
 
 router.post('/', rescue(userController.create));
 
-router.use(loginController.validateToken);
+router.use(rescue(loginController.validateToken));
 
 router.get('/', rescue(userController.list));
 

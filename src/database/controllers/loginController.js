@@ -1,5 +1,4 @@
 const loginService = require('../services/loginService.js');
-const jwtService = require('../services/jwtService.js');
 
 const loginController = {
     login: async (req, res) => {
@@ -11,9 +10,14 @@ const loginController = {
     },
 
     validateToken: (req, _res, next) => {
-        const { login } = req.headers;
+        const { authorization } = req.headers;
 
-        jwtService.validateToken(login);
+        if (!authorization) {
+            const error = new Error('Token not found');
+            error.name = 'UnauthorizedError';
+            throw error;
+        }
+        loginService.validateToken(authorization);
 
         next();
     },

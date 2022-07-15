@@ -9,12 +9,12 @@ const jwtService = {
 
     validateToken: (token) => {
         try {
-            const data = jwt.verify(token, process.env.JWT_SECRET);
+            const { data } = jwt.verify(token, process.env.JWT_SECRET);
             return data;
-        } catch (err) {
-            const error = new Error('Faça login');
-            error.name = 'UnauthorizedError';
-            throw error;
+        } catch (_error) {
+            const e = new Error('Expired or invalid token');
+            e.name = 'UnauthorizedError';
+            throw e;
         }
     },
 };
