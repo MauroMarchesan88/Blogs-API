@@ -2,6 +2,7 @@ const express = require('express');
 const loginRouter = require('./database/Routers/loginRouter.js');
 const userRouter = require('./database/Routers/userRouter.js');
 const categoriesRouter = require('./database/Routers/categoriesRouter.js');
+const postRouter = require('./database/Routers/postRouter');
 const helpRouter = require('./database/Routers/help');
 // ...
 
@@ -12,6 +13,7 @@ app.use(express.json());
 app.use('/login', loginRouter);
 app.use('/user', userRouter);
 app.use('/categories', categoriesRouter);
+app.use('/post', postRouter);
 
 // Ignorar esta rota por completo, fiz como extra para ajudar a Leandro Bonfim com o problema que ele estava tendo;
 app.use('/help', helpRouter);
