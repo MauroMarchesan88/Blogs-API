@@ -1,10 +1,10 @@
 const categoriesService = require('../services/categoriesService.js');
 
 const categoriesController = {
-    // list: async (_req, res) => {
-    //     const categories = await categoriesService.list();
-    //     res.status(200).json(categories);
-    // },
+    list: async (_req, res) => {
+        const categories = await categoriesService.list();
+        res.status(200).json(categories);
+    },
 
     create: async (req, res) => {
         const { name } = req.body;

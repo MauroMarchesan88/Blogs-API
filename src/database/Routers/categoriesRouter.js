@@ -9,7 +9,7 @@ const router = Router();
 router.use(rescue(loginController.validateToken));
 router.post('/', rescue(categoriesController.create));
 
-// router.get('/', rescue(categoriesController.list));
+router.get('/', rescue(categoriesController.list));
 // router.get('/:id', rescue(categoriesController.findById));
 
 module.exports = router;
