@@ -33,7 +33,7 @@ const loginService = {
 
         if (!user || user.password !== passwrd) {
             const error = new Error('Invalid fields');
-            error.name = 'UnauthorizedError';
+            error.name = 'ValidationError';
             throw error;
         }
 
@@ -45,8 +45,6 @@ const loginService = {
 
     validateToken: (token) => {
         const data = jwtService.validateToken(token);
-        // console.log(data, data);
-        // console.log(token, token);
         return data;
     },
 };

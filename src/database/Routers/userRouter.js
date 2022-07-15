@@ -11,5 +11,6 @@ router.post('/', rescue(userController.create));
 router.use(rescue(loginController.validateToken));
 
 router.get('/', rescue(userController.list));
+router.get('/:id', rescue(userController.findById));
 
 module.exports = router;
