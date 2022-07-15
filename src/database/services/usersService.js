@@ -1,6 +1,6 @@
 const Joi = require('joi');
 const db = require('../models');
-const jwtService = require('./jwtService');
+const jwtService = require('./jwtService.js');
 
 const usersService = {
     validateBody: (data) => {

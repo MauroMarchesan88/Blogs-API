@@ -1,6 +1,7 @@
 const express = require('express');
-const loginRouter = require('./database/Routers/loginRouter');
+const loginRouter = require('./database/Routers/loginRouter.js');
 const userRouter = require('./database/Routers/userRouter.js');
+const categoriesRouter = require('./database/Routers/categoriesRouter.js');
 // ...
 
 const app = express();
@@ -9,6 +10,7 @@ app.use(express.json());
 
 app.use('/login', loginRouter);
 app.use('/user', userRouter);
+app.use('/categories', categoriesRouter);
 
 app.use((err, _req, res, _next) => {
     const { name, message } = err;

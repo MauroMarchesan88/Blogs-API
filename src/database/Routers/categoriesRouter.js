@@ -1,16 +1,15 @@
 const { Router } = require('express');
 const rescue = require('express-rescue');
 
-const userController = require('../controllers/userController.js');
+const categoriesController = require('../controllers/categoriesController.js');
 const loginController = require('../controllers/loginController.js');
 
 const router = Router();
 
-router.post('/', rescue(userController.create));
-
 router.use(rescue(loginController.validateToken));
+router.post('/', rescue(categoriesController.create));
 
-router.get('/', rescue(userController.list));
-router.get('/:id', rescue(userController.findById));
+// router.get('/', rescue(categoriesController.list));
+// router.get('/:id', rescue(categoriesController.findById));
 
 module.exports = router;
