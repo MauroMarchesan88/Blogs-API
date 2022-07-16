@@ -20,14 +20,12 @@ const categoriesService = {
     },
 
     create: async (name) => {
-        console.log(name, 'name');
         const newCategory = await db.Category.create({ name });
         const { id } = newCategory.dataValues;
+
         const uniqueCategory = await db.Category.findOne({
             where: { id },
         });
-
-        console.log(uniqueCategory, 'unique');
 
         return uniqueCategory;
     },

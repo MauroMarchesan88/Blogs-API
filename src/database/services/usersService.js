@@ -49,7 +49,6 @@ const usersService = {
         const user = { displayName, email, password, image, token: '' };
 
         const token = jwtService.createToken(user);
-        await db.User.create({ token });
         user.token = token;
 
         await db.User.create(user);

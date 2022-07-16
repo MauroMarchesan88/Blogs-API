@@ -1,4 +1,5 @@
 const Joi = require('joi');
+const Sequelize = require('sequelize');
 const db = require('../models');
 
 const categoriesService = {
@@ -27,12 +28,25 @@ const categoriesService = {
     //     return categories;
     // },
 
-    create: async (title, content, categoryIds) => {
+    create: async (title, content, categoryIds, id) => {
+        const { count } = await db.Category.findAndCountAll({
+            where: { id: { [Sequelize.Op.like]: categoryIds[1] } },
+        });
+
+        if (!count) {
+            const e = new Error('"categoryIds" not found');
+            e.name = 'ValidationError';
+            throw e;
+        }
+
         const newPost = await db.BlogPost.create(
-            { title, content, postId: categoryIds[0], categoryId: categoryIds[1] },
+            { title, content, userId: id },
         );
 
-        console.log(newPost, 'newPost');
+        await db.PostCategory.bulkCreate([
+            { postId: newPost.id, categoryId: categoryIds[0] },
+            { postId: newPost.id, categoryId: categoryIds[1] },
+        ]);
 
         return newPost;
     },

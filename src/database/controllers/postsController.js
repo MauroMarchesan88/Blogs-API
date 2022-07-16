@@ -1,4 +1,5 @@
 const postsService = require('../services/postsService');
+const loginService = require('../services/loginService.js');
 
 const postsController = {
     // list: async (_req, res) => {
@@ -8,9 +9,12 @@ const postsController = {
 
     create: async (req, res) => {
         const { title, content, categoryIds } = req.body;
-        await postsService.validateBody(req.body);
+        const { authorization } = req.headers;
 
-        const post = await postsService.create(title, content, categoryIds);
+        await postsService.validateBody(req.body);
+        const { id } = await loginService.validateToken(authorization);
+
+        const post = await postsService.create(title, content, categoryIds, id);
 
         res.status(201).json(post);
     },

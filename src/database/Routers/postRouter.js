@@ -9,7 +9,7 @@ const router = Router();
 router.use(rescue(loginController.validateToken));
 
 router.post('/', rescue(postsController.create));
-router.get('/', rescue(postsController.create));
+// router.get('/', rescue(postsController.create));
 // router.get('/:id', rescue(postsController.findById));
 
 module.exports = router;
