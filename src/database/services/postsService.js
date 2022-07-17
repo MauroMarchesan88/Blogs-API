@@ -22,6 +22,24 @@ const categoriesService = {
         return value;
     },
 
+    validateBodyUpdate: (body) => {
+        const schema = Joi.object({
+            title: Joi.string().required()
+                .messages({
+                    'string.empty': 'Some required fields are missing',
+                }),
+            content: Joi.string().required()
+                .messages({
+                    'string.empty': 'Some required fields are missing',
+                }),
+        });
+
+        const { error, value } = schema.validate(body);
+        if (error) throw error;
+
+        return value;
+    },
+
     list: async (id) => {
         const posts = await db.BlogPost.findAll({
             where: { userId: { [Sequelize.Op.like]: id } },
@@ -80,20 +98,20 @@ const categoriesService = {
         return post;
     },
 
-    update: async (title, content, id) => {
+    update: async (title, content, userid, postId) => {
         const targetPost = await db.BlogPost.findOne({
-            where: { title },
+            where: { id: postId },
         });
 
-        if (id !== targetPost.userId) {
+        if (userid !== Number(targetPost.dataValues.userId)) {
             const e = new Error('Unauthorized user');
             e.name = 'UnauthorizedError';
             throw e;
         }
 
         const newPost = await db.BlogPost.update(
-            { content },
-            { where: { title } },
+            { title, content },
+            { where: { id: postId } },
         );
 
         return newPost;
@@ -103,8 +121,6 @@ const categoriesService = {
         const targetPost = await db.BlogPost.findOne({
             where: { id: postId },
         });
-
-        console.log(targetPost.dataValues.userId);
 
         if (userid !== Number(targetPost.dataValues.userId)) {
             const e = new Error('Unauthorized user');

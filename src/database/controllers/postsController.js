@@ -30,14 +30,17 @@ const postsController = {
 
     update: async (req, res) => {
         const { title, content } = req.body;
-        const { authorization } = req.headers;
+        await postsService.validateBodyUpdate(req.body);
+        const post = await postsService.findById(req.params.id);
 
-        await postsService.validateBody(req.body);
+        const { authorization } = req.headers;
         const { id } = await loginService.validateToken(authorization);
 
-        const post = await postsService.update(title, content, id);
+        await postsService.update(title, content, id, post.id);
 
-        res.status(201).json(post);
+        const updatedPost = await postsService.findById(req.params.id);
+
+        res.status(200).json(updatedPost);
     },
 
     delete: async (req, res) => {
@@ -45,7 +48,7 @@ const postsController = {
         const { id } = await loginService.validateToken(authorization);
         const post = await postsService.findById(req.params.id);
 
-        await postsService.destroy(Number(post.id), Number(id));
+        await postsService.destroy(post.id, id);
 
         res.sendStatus(204);
     },
