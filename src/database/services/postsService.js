@@ -79,6 +79,25 @@ const categoriesService = {
         }
         return post;
     },
+
+    update: async (title, content, id) => {
+        const targetPost = await db.BlogPost.findOne({
+            where: { title },
+        });
+
+        if (id !== targetPost.userId) {
+            const e = new Error('Unauthorized user');
+            e.name = 'UnauthorizedError';
+            throw e;
+        }
+
+        const newPost = await db.BlogPost.update(
+            { content },
+            { where: { title } },
+        );
+
+        return newPost;
+    },
 };
 
 module.exports = categoriesService; 

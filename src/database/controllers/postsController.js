@@ -27,6 +27,18 @@ const postsController = {
 
         res.status(200).json(post);
     },
+
+    update: async (req, res) => {
+        const { title, content } = req.body;
+        const { authorization } = req.headers;
+
+        await postsService.validateBody(req.body);
+        const { id } = await loginService.validateToken(authorization);
+
+        const post = await postsService.update(title, content, id);
+
+        res.status(201).json(post);
+    },
 };
 
 module.exports = postsController; 
