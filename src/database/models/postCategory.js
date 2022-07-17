@@ -17,8 +17,6 @@ const PostCategory = (sequelize, DataTypes) => {
             through: PostCategory,
             foreignKey: 'categoryId',
             otherkey: 'BlogPost',
-            onDelte: 'CASCADE',
-            hooks: true
         });
     };
 

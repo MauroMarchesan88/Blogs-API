@@ -104,21 +104,17 @@ const categoriesService = {
             where: { id: postId },
         });
 
-        if (userid !== targetPost.userId) {
+        console.log(targetPost.dataValues.userId);
+
+        if (userid !== targetPost.dataValues.userId) {
             const e = new Error('Unauthorized user');
             e.name = 'UnauthorizedError';
             throw e;
         }
 
-        // await db.PostCategory.destroy({
-        //     where: { postId },
-        // });
-
         const post = await db.BlogPost.destroy({
             where: { id: postId },
         });
-
-        console.log(post);
 
         return post;
     },
