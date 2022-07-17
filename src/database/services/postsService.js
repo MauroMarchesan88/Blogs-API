@@ -106,17 +106,15 @@ const categoriesService = {
 
         console.log(targetPost.dataValues.userId);
 
-        if (userid !== targetPost.dataValues.userId) {
+        if (userid !== Number(targetPost.dataValues.userId)) {
             const e = new Error('Unauthorized user');
             e.name = 'UnauthorizedError';
             throw e;
         }
 
-        const post = await db.BlogPost.destroy({
+        await db.BlogPost.destroy({
             where: { id: postId },
         });
-
-        return post;
     },
 };
 

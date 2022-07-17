@@ -45,9 +45,9 @@ const postsController = {
         const { id } = await loginService.validateToken(authorization);
         const post = await postsService.findById(req.params.id);
 
-        await postsService.destroy(post.id, id);
+        await postsService.destroy(Number(post.id), Number(id));
 
-        res.status(204);
+        res.sendStatus(204);
     },
 };
 
