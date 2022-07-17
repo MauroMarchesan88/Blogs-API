@@ -22,11 +22,20 @@ const categoriesService = {
         return value;
     },
 
-    // list: async () => {
-    //     const categories = await db.Category.findAll();
+    list: async (id) => {
+        const posts = await db.BlogPost.findAll({
+            where: { userId: { [Sequelize.Op.like]: id } },
+            include: [
+                { model: db.User, as: 'user', attributes: { exclude: ['password'] } },
+                {
+                    model: db.Category,
+                    as: 'categories',
+                },
+            ],
+        });
 
-    //     return categories;
-    // },
+        return posts;
+    },
 
     create: async (title, content, categoryIds, id) => {
         const { count } = await db.Category.findAndCountAll({
