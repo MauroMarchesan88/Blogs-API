@@ -98,6 +98,30 @@ const categoriesService = {
 
         return newPost;
     },
+
+    destroy: async (postId, userid) => {
+        const targetPost = await db.BlogPost.findOne({
+            where: { id: postId },
+        });
+
+        if (userid !== targetPost.userId) {
+            const e = new Error('Unauthorized user');
+            e.name = 'UnauthorizedError';
+            throw e;
+        }
+
+        // await db.PostCategory.destroy({
+        //     where: { postId },
+        // });
+
+        const post = await db.BlogPost.destroy({
+            where: { id: postId },
+        });
+
+        console.log(post);
+
+        return post;
+    },
 };
 
 module.exports = categoriesService; 

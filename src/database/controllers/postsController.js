@@ -39,6 +39,16 @@ const postsController = {
 
         res.status(201).json(post);
     },
+
+    delete: async (req, res) => {
+        const { authorization } = req.headers;
+        const { id } = await loginService.validateToken(authorization);
+        const post = await postsService.findById(req.params.id);
+
+        await postsService.destroy(post.id, id);
+
+        res.status(204);
+    },
 };
 
 module.exports = postsController; 
