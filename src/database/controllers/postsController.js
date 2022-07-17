@@ -22,11 +22,11 @@ const postsController = {
         res.status(201).json(post);
     },
 
-    // findById: async (req, res) => {
-    //     const category = await postsService.findById(req.params.id);
+    findById: async (req, res) => {
+        const post = await postsService.findById(req.params.id);
 
-    //     res.status(200).json(category);
-    // },
+        res.status(200).json(post);
+    },
 };
 
 module.exports = postsController; 

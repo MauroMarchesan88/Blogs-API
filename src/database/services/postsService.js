@@ -60,19 +60,25 @@ const categoriesService = {
         return newPost;
     },
 
-    // findById: async (id) => {
-    //     const user = await db.User.findByPk(id, {
-    //         attributes: { exclude: ['password'] },
-    //         where: { id },
-    //     });
+    findById: async (id) => {
+        const post = await db.BlogPost.findByPk(id, {
+            where: { id },
+            include: [
+                { model: db.User, as: 'user', attributes: { exclude: ['password'] } },
+                {
+                    model: db.Category,
+                    as: 'categories',
+                },
+            ],
+        });
 
-    //     if (!user) {
-    //         const e = new Error('User does not exist');
-    //         e.name = 'NotFoundError';
-    //         throw e;
-    //     }
-    //     return user;
-    // },
+        if (!post) {
+            const e = new Error('Post does not exist');
+            e.name = 'NotFoundError';
+            throw e;
+        }
+        return post;
+    },
 };
 
 module.exports = categoriesService; 
