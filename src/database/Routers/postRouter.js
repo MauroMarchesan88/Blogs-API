@@ -8,10 +8,11 @@ const router = Router();
 
 router.use(rescue(loginController.validateToken));
 
-router.post('/', rescue(postsController.create));
-router.get('/', rescue(postsController.list));
-router.get('/:id', rescue(postsController.findById));
 router.put('/:id', rescue(postsController.update));
 router.delete('/:id', rescue(postsController.delete));
+router.post('/', rescue(postsController.create));
+router.get('/search', rescue(postsController.findByQuery));
+router.get('/:id', rescue(postsController.findById));
+router.get('/', rescue(postsController.list));
 
 module.exports = router;

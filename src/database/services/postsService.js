@@ -98,6 +98,28 @@ const categoriesService = {
         return post;
     },
 
+    findByQuery: async (query) => {
+        const post = await db.BlogPost.findAll({
+            where: {
+                [Sequelize.Op.or]: [
+                    { title: { [Sequelize.Op.like]: `${query.q}` } },
+                    { content: { [Sequelize.Op.like]: `${query.q}` } },
+                ],
+            },
+            include: [
+                { model: db.User, as: 'user', attributes: { exclude: ['password'] } },
+                { model: db.Category, as: 'categories' },
+            ],
+        });
+
+        if (!post) {
+            const e = new Error('Post does not exist');
+            e.name = 'NotFoundError';
+            throw e;
+        }
+        return post;
+    },
+
     update: async (title, content, userid, postId) => {
         const targetPost = await db.BlogPost.findOne({
             where: { id: postId },

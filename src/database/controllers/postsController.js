@@ -28,6 +28,26 @@ const postsController = {
         res.status(200).json(post);
     },
 
+    findByQuery: async (req, res) => {
+        const { query } = req;
+        const { q } = query;
+        const { authorization } = req.headers;
+        const { id } = await loginService.validateToken(authorization);
+
+        let post = '';
+        if (q === '') {
+            post = await postsService.list(id);
+            return res.status(200).json(post);
+        }
+
+        if (q !== '') {
+            console.log('!query');
+            post = await postsService.findByQuery(query);
+        }
+
+        return res.status(200).json(post);
+    },
+
     update: async (req, res) => {
         const { title, content } = req.body;
         await postsService.validateBodyUpdate(req.body);
