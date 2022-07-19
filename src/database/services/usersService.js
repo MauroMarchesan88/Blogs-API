@@ -69,6 +69,12 @@ const usersService = {
         }
         return user;
     },
+
+    destroy: async (userid) => {
+        await db.BlogPost.destroy({
+            where: { id: userid },
+        });
+    },
 };
 
 module.exports = usersService; 
